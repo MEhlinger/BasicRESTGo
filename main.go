@@ -34,6 +34,13 @@ func getArtifact(w http.ResponseWriter, req *http.Request) {
 
 func createArtifact(w http.ResponseWriter, req *http.Request) {
     params := mux.Vars(req)
+    for _, artifact := range artifacts {
+        if artifact.ID == params["id"] {
+            http.Error(w, "Artifact id" + artifact.ID + " already exists.", 500)
+            return
+        }
+    }
+
     var artifact Artifact
     _ = json.NewDecoder(req.Body).Decode(&artifact)
     artifact.ID = params["id"]
