@@ -7,7 +7,7 @@ import (
     "bytes"
 )
 
-var  testArtifact = []byte(`{"name":"testArtifact","detail":"This is a test artifact."}`) 
+var  testArtifact = []byte(`{"name":"testArtifact","detail":"This is a test artifact."}`)
 
 func TestGetArtifacts(t *testing.T) {
     req, _ := http.NewRequest("GET", "/artifacts", nil)
@@ -15,6 +15,15 @@ func TestGetArtifacts(t *testing.T) {
     getArtifacts(recorder, req)
     if recorder.Code != 200 {
         t.Errorf("Status code returned was %v , expected 200.", recorder.Code)
+    }
+}
+
+func TestGetArtifact(t *testing.T) {
+    req, _ := http.NewRequest("GET", "/artifacts/1", nil)
+    recorder := httptest.NewRecorder()
+    getArtifact(recorder, req)
+    if recorder.Code != 200 {
+        t.Errorf("Status code returned was %v, expected 200.", recorder.Code)
     }
 }
 
